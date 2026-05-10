@@ -14,16 +14,6 @@ The project was built to apply:
 
 ---
 
-## Live Demo
-
-Frontend:  
-https://amlrizk03.github.io/ideadesk/
-
-Note:  
-The frontend is hosted using GitHub Pages.  
-The FastAPI backend currently runs locally for AI generation.
-
----
 
 ## Features
 
