@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IdeaDesk | Student Project Planner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="site-header">
+        <a class="brand" href="#home" aria-label="IdeaDesk home">
+          <span class="brand-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <path d="M18 35h12m-9 5h6" />
+              <path
+                d="M16.5 27.5c-2.6-2.2-4-5.1-4-8.2C12.5 12.8 17.6 8 24 8s11.5 4.8 11.5 11.3c0 3.1-1.4 6-4 8.2-1.4 1.2-2 2.6-2 4.2h-11c0-1.6-.6-3-2-4.2Z"
+              />
+              <path
+                d="M24 3v3M8.8 9.8l2.4 2.4M39.2 9.8l-2.4 2.4M5 23h3M40 23h3M12 39l2.3-2.3M36 39l-2.3-2.3"
+              />
+            </svg>
+          </span>
+          <span>
+            <strong>IdeaDesk</strong>
+            <small>Student Project Planner</small>
+          </span>
+        </a>
+
+        <button
+          class="hamburger"
+          id="hamburger"
+          type="button"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+          <a class="active" href="#home">Home</a>
+          <a href="#project-form">Planner</a>
+          <a href="#showcase">Showcase</a>
+          <a href="#resources">Resources</a>
+          <a href="#portfolio-kit">Portfolio Kit</a>
+          <a href="#about">About</a>
+        </nav>
+
+        <a class="new-project" href="#project-form">
+          New Project
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+        </a>
+      </header>
+
+      <main id="home">
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Planning studio for student teams</p>
+            <h1>Plan your next student project with clarity</h1>
+            <p>
+              Turn rough ideas into a clear plan with features, tech stack,
+              roles, milestones, and portfolio-ready outputs.
+            </p>
+            <div class="hero-actions">
+              <a class="primary-link" href="#project-form">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m5 19 10-10" />
+                  <path d="m14 5 5 5" />
+                  <path d="M13 6 9 2M19 14l3 3M3 8l3 3" />
+                </svg>
+                Shape My Project
+              </a>
+              <a class="secondary-link" href="#showcase">See how it helps</a>
+            </div>
+          </div>
+
+          <div class="hero-image" aria-label="Warm planning desk image"></div>
+        </section>
+
+        <section class="studio-layout" aria-label="IdeaDesk planning workspace">
+          <form class="panel form-panel" id="project-form" novalidate>
+            <div class="section-title">
+              <h2>Shape My Project</h2>
+              <span></span>
+            </div>
+
+            <label for="projectIdea">Project Idea</label>
+            <div class="field-wrap">
+              <textarea
+                id="projectIdea"
+                name="projectIdea"
+                maxlength="2000"
+                placeholder="Describe your project idea here..."
+                aria-describedby="ideaCount ideaWarning"
+              ></textarea>
+              <small><span id="ideaCount">0</span> / 2000</small>
+            </div>
+            <p class="field-warning" id="ideaWarning" role="alert"></p>
+
+            <label for="skills">Current Skills</label>
+            <input
+              id="skills"
+              name="skills"
+              type="text"
+              placeholder="e.g., Python, SQL, HTML"
+            />
+
+            <div class="split-fields">
+              <div>
+                <label for="technologies">Technologies You Know</label>
+                <input
+                  id="technologies"
+                  name="technologies"
+                  type="text"
+                  placeholder="e.g., React, Node.js, MySQL"
+                />
+              </div>
+              <div>
+                <label for="goal">Project Goal</label>
+                <input
+                  id="goal"
+                  name="goal"
+                  type="text"
+                  placeholder="e.g., Build a useful app"
+                />
+              </div>
+            </div>
+
+            <fieldset class="chip-group">
+              <legend>Project Type</legend>
+              <div class="chips">
+                <button class="chip active" type="button" data-group="type" data-value="Web App">Web App</button>
+                <button class="chip" type="button" data-group="type" data-value="Mobile App">Mobile</button>
+                <button class="chip" type="button" data-group="type" data-value="AI Tool">AI Tool</button>
+                <button class="chip" type="button" data-group="type" data-value="Game">Game</button>
+                <button class="chip" type="button" data-group="type" data-value="Research">Research</button>
+                <button class="chip" type="button" data-group="type" data-value="Design Project">Design</button>
+              </div>
+            </fieldset>
+
+            <fieldset class="chip-group">
+              <legend>Timeline</legend>
+              <div class="chips">
+                <button class="chip" type="button" data-group="timeline" data-value="1 Week">1 Week</button>
+                <button class="chip active" type="button" data-group="timeline" data-value="1 Month">1 Month</button>
+                <button class="chip" type="button" data-group="timeline" data-value="Semester">Semester</button>
+              </div>
+            </fieldset>
+
+            <button class="shape-button" id="shapeButton" type="submit">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m5 19 10-10" />
+                <path d="m14 5 5 5" />
+                <path d="M13 6 9 2M19 14l3 3M3 8l3 3" />
+              </svg>
+              Generate Plan
+            </button>
+          </form>
+
+          <section class="panel results-panel" id="plans" aria-live="polite">
+            <div class="results-header">
+              <div class="section-title">
+                <h2>Your Project Plan</h2>
+                <span></span>
+              </div>
+            </div>
+
+            <div class="empty-state" id="emptyState">
+              <div class="worksheet">
+                <p>Project title: <span></span></p>
+                <p>Main goal: <span></span></p>
+                <p>Features: <span></span></p>
+                <p>Milestones: <span></span></p>
+              </div>
+              <strong>Your project plan will appear here.</strong>
+              <small>Fill in your idea and generate a plan.</small>
+            </div>
+
+            <div class="loading-state hidden" id="loadingState">
+              <span class="spinner"></span>
+              <p>Shaping your idea...</p>
+            </div>
+
+            <div class="result-grid hidden" id="resultGrid"></div>
+          </section>
+
+          <aside class="side-column">
+            <section class="panel mini-panel" id="portfolio-kit">
+              <div class="mini-heading">
+                <h2>Portfolio Kit</h2>
+                <a href="#resources">View All</a>
+              </div>
+              <div class="kit-shortcuts">
+                <button class="kit-button" id="exportCopy" type="button">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M9 9h12v12H9z" />
+                    <path d="M5 15H3V3h12v2" />
+                  </svg>
+                  Project Brief
+                </button>
+                <button class="kit-button" id="exportReadme" type="button">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M4 5h16v11H4z" />
+                    <path d="M8 21h8M12 16v5" />
+                  </svg>
+                  Presentation
+                </button>
+                <button class="kit-button" id="exportPdf" type="button">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 17V3M5 10l7 7 7-7" />
+                    <path d="M5 21h14" />
+                  </svg>
+                  Download PDF
+                </button>
+                <button class="kit-button" id="exportReadmeDoc" type="button">
+                  <svg viewBox="0 0 24 24">
+                    <path d="m8 9-4 3 4 3" />
+                    <path d="m16 9 4 3-4 3" />
+                    <path d="m14 5-4 14" />
+                  </svg>
+                  README
+                </button>
+              </div>
+            </section>
+          </aside>
+        </section>
+
+        <section class="showcase" id="showcase">
+          <div class="showcase-image">
+          <img src="assets/ideadesk2.png" alt="Student project planning" />
+          </div>
+
+          <div class="showcase-copy">
+            <p class="eyebrow">From messy notes to buildable plans</p>
+            <h2>From idea to reality</h2>
+            <p>
+              Every great project starts as a rough thought. IdeaDesk helps
+              student teams organize ideas, plan milestones, choose
+              technologies, and build portfolio-worthy projects with confidence.
+            </p>
+            <div class="showcase-stats">
+              <article>
+                <strong>01</strong>
+                <span>Clarify the idea</span>
+              </article>
+              <article>
+                <strong>02</strong>
+                <span>Plan the build</span>
+              </article>
+              <article>
+                <strong>03</strong>
+                <span>Present with confidence</span>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="resources" id="resources">
+          <div class="section-title centered">
+            <h2>Useful Resources</h2>
+            <span></span>
+          </div>
+          <div class="resources-flex">
+            <article>
+              <strong>README Checklist</strong>
+              <p>Title, demo, features, setup, screenshots, and future ideas.</p>
+            </article>
+            <article>
+              <strong>Presentation Outline</strong>
+              <p>Problem, users, solution, tech stack, demo flow, and lessons learned.</p>
+            </article>
+            <article>
+              <strong>GitHub Repo Setup</strong>
+              <p>Plan commits, folders, issues, and your first project board.</p>
+            </article>
+            <article>
+              <strong>Feature Prioritization</strong>
+              <p>Choose the must-have MVP features before building too much.</p>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer" id="about">
+        <div class="footer-main">
+          <div class="footer-brand">
+            <a class="brand" href="#home" aria-label="IdeaDesk home">
+              <span class="brand-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48">
+                  <path d="M18 35h12m-9 5h6" />
+                  <path d="M16.5 27.5c-2.6-2.2-4-5.1-4-8.2C12.5 12.8 17.6 8 24 8s11.5 4.8 11.5 11.3c0 3.1-1.4 6-4 8.2-1.4 1.2-2 2.6-2 4.2h-11c0-1.6-.6-3-2-4.2Z" />
+                  <path d="M24 3v3M8.8 9.8l2.4 2.4M39.2 9.8l-2.4 2.4M5 23h3M40 23h3M12 39l2.3-2.3M36 39l-2.3-2.3" />
+                </svg>
+              </span>
+              <span>
+                <strong>IdeaDesk</strong>
+                <small>Student Project Planner</small>
+              </span>
+            </a>
+            <p>
+              A warm planning workspace for turning rough university project
+              ideas into structured, portfolio-ready plans.
+            </p>
+          </div>
+
+          <div class="footer-links">
+            <div>
+              <h3>Navigate</h3>
+              <a href="#home">Home</a>
+              <a href="#project-form">Planner</a>
+              <a href="#showcase">Showcase</a>
+            </div>
+            <div>
+              <h3>Project Tools</h3>
+              <a href="#portfolio-kit">Portfolio Kit</a>
+              <a href="#resources">Resources</a>
+              <a href="#plans">Project Plan</a>
+            </div>
+            <div>
+              <h3>Social</h3>
+              <a href="https://github.com/amlrizk03" target="_blank" rel="noopener noreferrer">GitHub</a>
+              <a href="https://www.linkedin.com/in/amlrizk" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© 2026 IdeaDesk. Built for student project planning.</span>
+        </div>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
