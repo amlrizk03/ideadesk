@@ -239,16 +239,7 @@ h1 {
   letter-spacing: 0;
 }
 
-.intro-text h1::after {
-  display: block;
-  width: 135px;
-  height: 6px;
-  margin: 8px 0 0 95px;
-  border-radius: 999px;
-  content: "";
-  background: var(--yellow);
-  transform: rotate(-2deg);
-}
+
 
 .intro-text p:not(.small-heading) {
   max-width: 390px;
