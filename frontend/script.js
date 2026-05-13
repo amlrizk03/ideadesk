@@ -6,9 +6,7 @@ const shapeButton = document.querySelector("#shapeButton");
 const emptyState = document.querySelector("#emptyState");
 const loadingState = document.querySelector("#loadingState");
 const resultGrid = document.querySelector("#resultGrid");
-const saveButton = document.querySelector("#saveButton");
-
-const hamburger = document.querySelector("#hamburger");
+const menuButton = document.querySelector("#menuButton");
 const navLinks = document.querySelector("#navLinks");
 
 const selections = {
@@ -53,12 +51,12 @@ function renderGeneratedPlan(data) {
   latestPlan = data;
 
   resultGrid.innerHTML = `
-    <article class="result-card card-idea">
+    <article class="plan-card idea-card">
       <h3>Improved Idea</h3>
       <p>${escapeHTML(data.improvedIdea)}</p>
     </article>
 
-    <article class="result-card card-features">
+    <article class="plan-card features-card">
       <h3>Main Features</h3>
       <ul>
         ${(data.mainFeatures || [])
@@ -67,46 +65,46 @@ function renderGeneratedPlan(data) {
       </ul>
     </article>
 
-    <article class="result-card card-stack">
+    <article class="plan-card tech-card">
       <h3>Suggested Tech Stack</h3>
-      <div class="stack-tags">
+      <div class="tech-list">
         ${(data.suggestedTechStack || [])
           .map(
             (item, index) =>
-              `<span class="stack-tag tag-${index % 5}">${escapeHTML(item)}</span>`,
+              `<span class="tech-item tag-${index % 5}">${escapeHTML(item)}</span>`,
           )
           .join("")}
       </div>
     </article>
 
-    <article class="result-card card-roles">
+    <article class="plan-card roles-card">
       <h3>Team Roles</h3>
-      <div class="role-badges">
+      <div class="role-list">
         ${(data.teamRoles || [])
-          .map((item) => `<span class="role-badge">${escapeHTML(item)}</span>`)
+          .map((item) => `<span class="role-item">${escapeHTML(item)}</span>`)
           .join("")}
       </div>
     </article>
 
-    <article class="result-card card-gaps">
+    <article class="plan-card gaps-card">
       <h3>Skill Gaps</h3>
-      <div class="gap-notes">
+      <div class="gap-list">
         ${(data.skillGaps || [])
-          .map((item) => `<span class="gap-note">${escapeHTML(item)}</span>`)
+          .map((item) => `<span class="gap-item">${escapeHTML(item)}</span>`)
           .join("")}
       </div>
     </article>
 
-    <article class="result-card card-milestones">
+    <article class="plan-card steps-card">
       <h3>Milestones</h3>
-      <div class="milestone-timeline">
+      <div class="steps-list">
         ${(data.milestones || [])
           .map(
             (item, index) => `
-              <div class="milestone-item">
-                <span class="milestone-dot"></span>
-                <span class="milestone-num">${index + 1}</span>
-                <span class="milestone-text">${escapeHTML(item)}</span>
+              <div class="step-item">
+                <span class="step-dot"></span>
+                <span class="step-number">${index + 1}</span>
+                <span class="step-text">${escapeHTML(item)}</span>
               </div>
             `,
           )
@@ -122,7 +120,7 @@ function renderErrorMessage(
   message = "Please make sure the backend is running, then try again.",
 ) {
   resultGrid.innerHTML = `
-    <article class="result-card card-gaps">
+    <article class="plan-card gaps-card">
       <h3>Something went wrong</h3>
       <p>${escapeHTML(message)}</p>
     </article>
@@ -265,20 +263,20 @@ function downloadTextFile(filename, text) {
   URL.revokeObjectURL(url);
 }
 
-document.querySelectorAll(".chip").forEach((chip) => {
-  chip.addEventListener("click", () => {
-    const group = chip.dataset.group;
-    const value = chip.dataset.value;
+document.querySelectorAll(".choice").forEach((choice) => {
+  choice.addEventListener("click", () => {
+    const group = choice.dataset.group;
+    const value = choice.dataset.value;
 
     selections[group] = value;
 
     document
-      .querySelectorAll(`.chip[data-group="${group}"]`)
+      .querySelectorAll(`.choice[data-group="${group}"]`)
       .forEach((item) => {
         item.classList.remove("active");
       });
 
-    chip.classList.add("active");
+    choice.classList.add("active");
   });
 });
 
@@ -349,20 +347,6 @@ if (projectIdea) {
   });
 }
 
-if (saveButton) {
-  saveButton.addEventListener("click", () => {
-    const originalText = saveButton.innerHTML;
-
-    saveButton.innerHTML = "Saved";
-    saveButton.disabled = true;
-
-    setTimeout(() => {
-      saveButton.innerHTML = originalText;
-      saveButton.disabled = false;
-    }, 1400);
-  });
-}
-
 function setupExportButton(buttonId, actionType, feedbackText) {
   const button = document.querySelector(buttonId);
 
@@ -408,16 +392,16 @@ setupExportButton("#exportReadme", "presentation", "Outline copied");
 setupExportButton("#exportPdf", "pdf", "Downloaded");
 setupExportButton("#exportReadmeDoc", "readme", "README copied");
 
-if (hamburger && navLinks) {
-  hamburger.addEventListener("click", () => {
+if (menuButton && navLinks) {
+  menuButton.addEventListener("click", () => {
     const isOpen = navLinks.classList.toggle("open");
-    hamburger.setAttribute("aria-expanded", String(isOpen));
+    menuButton.setAttribute("aria-expanded", String(isOpen));
   });
 
   navLinks.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", () => {
       navLinks.classList.remove("open");
-      hamburger.setAttribute("aria-expanded", "false");
+      menuButton.setAttribute("aria-expanded", "false");
     });
   });
 }
