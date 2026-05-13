@@ -10,7 +10,7 @@ The project was built to apply:
 
 ## Preview
 
-![IdeaDesk Preview](frontend/assets/preview.png)
+![IdeaDesk Preview](docs/assets/preview.png)
 
 ---
 
@@ -52,7 +52,7 @@ The project was built to apply:
 
 ```text
 ideadesk/
-├── frontend/
+├── docs/
 │   ├── index.html
 │   ├── style.css
 │   ├── script.js
