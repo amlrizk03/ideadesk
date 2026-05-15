@@ -37,18 +37,23 @@ def root():
 def generate_plan(request: PlanRequest):
     try:
         print("Generating project plan...")
-        plan = generate_project_plan(request.model_dump())
+
+        user_data = request.model_dump()
+        plan = generate_project_plan(user_data)
+
         print("Project plan generated successfully.")
         return plan
+
     except ValueError as error:
-        raise HTTPException(status_code=502, detail=str(error)) from error
+        print("AI returned invalid data:", error)
+        raise HTTPException(
+            status_code=502,
+            detail="The AI response was not valid. Please try again."
+        )
+
     except Exception as error:
-        print("IdeaDesk backend error:", repr(error))
+        print("Backend error:", error)
         raise HTTPException(
             status_code=500,
-            detail=(
-                "The project plan could not be generated. "
-                "Check that the backend is running, your Groq API key is valid, "
-                "and your Groq account has available request quota."
-            ),
-        ) from error
+            detail="Something went wrong while generating the project plan."
+        )

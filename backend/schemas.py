@@ -18,11 +18,24 @@ class PortfolioKit(BaseModel):
     nextBestStep: str
 
 
+class LearningResource(BaseModel):
+    gap: str
+    whyItMatters: str
+    platform: str
+    resourceTitle: str
+    resourceUrl: str
+    difficulty: str
+    estimatedTime: str
+    nextStep: str
+
+
 class PlanResponse(BaseModel):
     improvedIdea: str
+    projectDescription: str
     mainFeatures: List[str]
     suggestedTechStack: List[str]
     teamRoles: List[str]
     skillGaps: List[str]
     milestones: List[str]
+    learningResources: List[LearningResource]
     portfolioKit: PortfolioKit

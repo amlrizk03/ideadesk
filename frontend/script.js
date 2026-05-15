@@ -6,6 +6,7 @@ const shapeButton = document.querySelector("#shapeButton");
 const emptyState = document.querySelector("#emptyState");
 const loadingState = document.querySelector("#loadingState");
 const resultGrid = document.querySelector("#resultGrid");
+const learningResources = document.querySelector("#learningResources");
 const menuButton = document.querySelector("#menuButton");
 const navLinks = document.querySelector("#navLinks");
 
@@ -47,17 +48,113 @@ function getInputValue(selector) {
   return input ? input.value.trim() : "";
 }
 
+function isTurkishText(text) {
+  return /[çğıöşüÇĞİÖŞÜ]|\b(bir|için|istiyorum|olsun|hangi|bana|bütçe)\b/i.test(
+    String(text || ""),
+  );
+}
+
+function getUiLabels(data = {}) {
+  const planText = [
+    projectIdea?.value,
+    data.improvedIdea,
+    data.projectDescription,
+    ...(data.mainFeatures || []),
+    ...(data.skillGaps || []),
+  ].join(" ");
+
+  if (isTurkishText(planText)) {
+    return {
+      improvedIdea: "Geliştirilmiş Fikir",
+      projectDescription: "Proje Açıklaması",
+      mainFeatures: "Ana Özellikler",
+      suggestedTechStack: "Önerilen Teknolojiler",
+      teamRoles: "Takım Rolleri",
+      skillGaps: "Eksik Beceriler",
+      milestones: "Kilometre Taşları",
+      noResources: "Henüz kaynak yok.",
+      generateFirst: "Önce bir proje planı oluştur.",
+      startLearning: "Öğrenmeye Başla",
+    };
+  }
+
+  return {
+    improvedIdea: "Improved Idea",
+    projectDescription: "Project Description",
+    mainFeatures: "Main Features",
+    suggestedTechStack: "Suggested Tech Stack",
+    teamRoles: "Team Roles",
+    skillGaps: "Skill Gaps",
+    milestones: "Milestones",
+    noResources: "No resources yet.",
+    generateFirst: "Generate a project plan first.",
+    startLearning: "Start Learning",
+  };
+}
+
+function renderLearningResources(resources = []) {
+  if (!learningResources) return;
+
+  const labels = getUiLabels();
+
+  if (!resources.length) {
+    learningResources.innerHTML = `
+      <article class="skill-growth-empty">
+        <strong>${labels.noResources}</strong>
+        <span>${labels.generateFirst}</span>
+      </article>
+    `;
+    return;
+  }
+
+  learningResources.innerHTML = resources
+    .map(
+      (resource) => `
+        <article class="resource-card">
+          <div class="resource-top">
+            <span class="difficulty">${escapeHTML(resource.difficulty)}</span>
+            <span>${escapeHTML(resource.estimatedTime)}</span>
+          </div>
+
+          <h3>${escapeHTML(resource.gap)}</h3>
+          <p>${escapeHTML(resource.whyItMatters)}</p>
+
+          <div class="resource-platform">
+            <strong>${escapeHTML(resource.platform)}</strong>
+            <span>${escapeHTML(resource.resourceTitle)}</span>
+          </div>
+
+          <p class="next-step">${escapeHTML(resource.nextStep)}</p>
+
+          <a href="${escapeHTML(resource.resourceUrl)}" target="_blank" rel="noopener noreferrer">
+            ${labels.startLearning}
+          </a>
+        </article>
+      `,
+    )
+    .join("");
+}
+
+
 function renderGeneratedPlan(data) {
   latestPlan = data;
+  renderLearningResources(data.learningResources || []);
+
+  const labels = getUiLabels(data);
 
   resultGrid.innerHTML = `
     <article class="plan-card idea-card">
-      <h3>Improved Idea</h3>
+      <h3>${labels.improvedIdea}</h3>
       <p>${escapeHTML(data.improvedIdea)}</p>
     </article>
 
+    <article class="plan-card description-card">
+      <h3>${labels.projectDescription || "Proje A\u00e7\u0131klamas\u0131"}</h3>
+      <p>${escapeHTML(data.projectDescription)}</p>
+    </article>
+
     <article class="plan-card features-card">
-      <h3>Main Features</h3>
+      <h3>${labels.mainFeatures}</h3>
       <ul>
         ${(data.mainFeatures || [])
           .map((item) => `<li>${escapeHTML(item)}</li>`)
@@ -66,7 +163,7 @@ function renderGeneratedPlan(data) {
     </article>
 
     <article class="plan-card tech-card">
-      <h3>Suggested Tech Stack</h3>
+      <h3>${labels.suggestedTechStack}</h3>
       <div class="tech-list">
         ${(data.suggestedTechStack || [])
           .map(
@@ -78,7 +175,7 @@ function renderGeneratedPlan(data) {
     </article>
 
     <article class="plan-card roles-card">
-      <h3>Team Roles</h3>
+      <h3>${labels.teamRoles}</h3>
       <div class="role-list">
         ${(data.teamRoles || [])
           .map((item) => `<span class="role-item">${escapeHTML(item)}</span>`)
@@ -87,7 +184,7 @@ function renderGeneratedPlan(data) {
     </article>
 
     <article class="plan-card gaps-card">
-      <h3>Skill Gaps</h3>
+      <h3>${labels.skillGaps}</h3>
       <div class="gap-list">
         ${(data.skillGaps || [])
           .map((item) => `<span class="gap-item">${escapeHTML(item)}</span>`)
@@ -96,7 +193,7 @@ function renderGeneratedPlan(data) {
     </article>
 
     <article class="plan-card steps-card">
-      <h3>Milestones</h3>
+      <h3>${labels.milestones}</h3>
       <div class="steps-list">
         ${(data.milestones || [])
           .map(
@@ -134,11 +231,13 @@ function getFallbackPlan() {
     improvedIdea:
       projectIdea.value.trim() ||
       "Generate a project plan first, then try this button again.",
+    projectDescription: "",
     mainFeatures: [],
     suggestedTechStack: [],
     teamRoles: [],
     skillGaps: [],
     milestones: [],
+    learningResources: [],
     portfolioKit: {
       projectPitch: "",
       readmeOutline: [],
@@ -154,6 +253,9 @@ IdeaDesk Project Brief
 Improved Idea:
 ${plan.improvedIdea}
 
+Project Description:
+${plan.projectDescription || ""}
+
 Main Features:
 ${(plan.mainFeatures || []).map((item) => `- ${item}`).join("\n")}
 
@@ -165,6 +267,12 @@ ${(plan.teamRoles || []).map((item) => `- ${item}`).join("\n")}
 
 Skill Gaps:
 ${(plan.skillGaps || []).map((item) => `- ${item}`).join("\n")}
+
+Learning Resources:
+${(plan.learningResources || [])
+  .map((item) => `- ${item.gap}: ${item.platform} - ${item.resourceTitle}`)
+  .join("\n")}
+
 
 Milestones:
 ${(plan.milestones || []).map((item) => `- ${item}`).join("\n")}
@@ -183,6 +291,9 @@ Describe who will use the project.
 
 3. Solution
 ${plan.improvedIdea}
+
+Project Description:
+${plan.projectDescription || ""}
 
 4. Main Features
 ${(plan.mainFeatures || []).map((item) => `- ${item}`).join("\n")}
@@ -209,7 +320,7 @@ ${plan.portfolioKit?.projectPitch || plan.improvedIdea}
 
 ## Problem Statement
 
-${plan.improvedIdea}
+${plan.projectDescription || plan.improvedIdea}
 
 ## Features
 
